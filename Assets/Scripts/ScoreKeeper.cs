@@ -7,9 +7,9 @@ public class ScoreKeeper : MonoBehaviour {
 
 	public static int score = 0;
 	public static int livesGiven = 1;
+	public int scoreToGiveLife = 5000;
 
 	private Text myScore;
-	private int scoreToGiveLife = 5000;
 	
 	void Start(){
 		myScore = GetComponent<Text>();
