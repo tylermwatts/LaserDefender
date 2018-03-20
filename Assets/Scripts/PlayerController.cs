@@ -15,8 +15,17 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip hitSound;
 	public AudioClip shipExplosion;
 
+	private bool freshRespawn;
+
     float xmin;
 	float xmax;
+
+	void Awake(){
+		var playerBlink = GetComponent<Animation>();
+        playerBlink.Play();
+		freshRespawn = true;
+		Invoke("FreshRespawn", 1f);
+	}
 
     // Use this for initialization
     void Start () {
@@ -52,18 +61,14 @@ public class PlayerController : MonoBehaviour {
 		RestrictToPlayspace();
 	}
 
-	void OnTriggerEnter2D(Collider2D collider){
+	public void OnTriggerEnter2D(Collider2D collider){
 			Projectile missile = collider.gameObject.GetComponent<Projectile>();
-			if (missile){
+			if (missile && !freshRespawn){
 				health -= missile.GetDamage();
 				missile.Hit();
 				AudioSource.PlayClipAtPoint(hitSound, transform.position);
 				if (health <= 0){
-					lifeTracker = GameObject.FindObjectOfType<LifeTracker>();
-					lifeTracker.LoseLife();
-					var exploder = GameObject.FindObjectOfType<Exploder>();
-					exploder.Explode(transform.position);
-					Destroy(gameObject);
+					PlayerDies();
 				}
 			}
 		}
@@ -71,5 +76,17 @@ public class PlayerController : MonoBehaviour {
 	void RestrictToPlayspace(){
 		float newX = Mathf.Clamp(transform.position.x, xmin, xmax);
 		transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+	}
+
+	public void PlayerDies(){
+		lifeTracker = GameObject.FindObjectOfType<LifeTracker>();
+		lifeTracker.LoseLife();
+		var exploder = GameObject.FindObjectOfType<Exploder>();
+		exploder.Explode(transform.position);
+		Destroy(gameObject);
+	}
+
+	void FreshRespawn(){
+		freshRespawn = false;
 	}
 }

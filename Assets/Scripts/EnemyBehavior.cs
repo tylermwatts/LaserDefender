@@ -10,6 +10,7 @@ public class EnemyBehavior : MonoBehaviour {
 	public int scoreValue = 150;
 	public AudioClip enemyFireSound;
 	public AudioClip enemyDies;
+	public GameObject player;
 	
 
 	private ScoreKeeper scoreKeeper;
@@ -19,8 +20,9 @@ public class EnemyBehavior : MonoBehaviour {
 	}
 
 	void Update(){
+		var lifeTracker = GameObject.Find("LifeTracker").GetComponent<LifeTracker>();
 		float probability = Time.deltaTime * shotsPerSecond;
-		if (Random.value < probability){
+		if (!lifeTracker.playerDead && Random.value < probability){
 			Fire();
 		}
 	}
@@ -47,4 +49,5 @@ public class EnemyBehavior : MonoBehaviour {
 			exploder.Explode(transform.position);
 			Destroy(gameObject);
 		}
+
 }

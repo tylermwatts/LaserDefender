@@ -10,17 +10,22 @@ private Vector3 startPosition;
 private GameObject playerShipInstance;
 public AudioClip shipExplosionSFX;
 public GameObject explosionPrefab;
+public bool playerDead;
 
-	private Text myLives;
+private Text myLives;
 	
 	void Start(){
 		myLives = GetComponent<Text>();
 		ResetLives();
 	}
 
-	public void LoseLife(){
-		playerLives--;
+	void Update(){
 		myLives.text = playerLives.ToString();
+	}
+
+	public void LoseLife(){
+		playerDead = true;
+		playerLives--;		
 		if(playerLives <= 0){
 			Invoke("YaFuckinLostPal", 1.5f);
 		} else {
@@ -38,6 +43,7 @@ public GameObject explosionPrefab;
 	}
 	
 	void Respawn(){
+		playerDead = false;
 		var playerRespawner = GameObject.FindObjectOfType<PlayerRespawner>();
 		playerRespawner.RespawnPlayer();
 		}
