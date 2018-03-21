@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject projectile;
 	public float projectileSpeed;
 	public float firingRate = 0.2f;
-	public float health = 250f;
+	public static float health = 250f;
 	public LevelManager levelManager;
 	public LifeTracker lifeTracker;
 	public AudioClip fireSound;
@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour {
 			beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed,0);
 			AudioSource.PlayClipAtPoint(fireSound,transform.position);
 	}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)){
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour {
 				health -= missile.GetDamage();
 				missile.Hit();
 				AudioSource.PlayClipAtPoint(hitSound, transform.position);
+				FreshRespawn();
 				if (health <= 0){
 					PlayerDies();
 				}
@@ -88,5 +90,12 @@ public class PlayerController : MonoBehaviour {
 
 	void ReadyToBeHit(){
 		freshRespawn = false;
+	}
+
+	void FreshRespawn(){
+		var playerBlink = GetComponent<Animation>();
+        playerBlink.Play();
+		freshRespawn = true;
+		Invoke("ReadyToBeHit", 1f);
 	}
 }

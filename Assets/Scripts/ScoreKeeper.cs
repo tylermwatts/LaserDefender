@@ -20,10 +20,7 @@ public class ScoreKeeper : MonoBehaviour {
 		score += points;
 		myScore.text = score.ToString();
 		if (score >= scoreToGiveLife * livesGiven){
-			LifeTracker.playerLives++;
-			livesGiven++;
-			var plusLifeFlash = FindObjectOfType<PlusLifeFlash>();
-			plusLifeFlash.Flash();
+			GiveLife();
 		}
 	}
 
@@ -31,4 +28,11 @@ public class ScoreKeeper : MonoBehaviour {
 		score = 0;
 		livesGiven = 1;
 		}
+
+	public void GiveLife(){
+		LifeTracker.playerLives++;
+		livesGiven++;
+		var plusLifeFlash = FindObjectOfType<PlusLifeFlash>();
+		plusLifeFlash.Flash();
+	}
 }

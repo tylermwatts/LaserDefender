@@ -23,5 +23,6 @@ private GameObject playerShipInstance;
 
     public void RespawnPlayer(){
 		playerShipInstance = Instantiate(playerShipPrefab, startPosition, Quaternion.identity);
+		PlayerController.health = 250f;
 	}
 }
