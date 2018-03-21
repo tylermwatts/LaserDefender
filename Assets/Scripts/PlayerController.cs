@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 		var playerBlink = GetComponent<Animation>();
         playerBlink.Play();
 		freshRespawn = true;
-		Invoke("FreshRespawn", 1f);
+		Invoke("ReadyToBeHit", 1f);
 	}
 
     // Use this for initialization
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void FreshRespawn(){
+	void ReadyToBeHit(){
 		freshRespawn = false;
 	}
 }

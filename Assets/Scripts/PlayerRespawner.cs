@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ private GameObject playerShipInstance;
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
-	public void RespawnPlayer(){
+    public void RespawnPlayer(){
 		playerShipInstance = Instantiate(playerShipPrefab, startPosition, Quaternion.identity);
 	}
 }

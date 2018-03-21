@@ -12,6 +12,7 @@ public class Exploder : MonoBehaviour {
 		var particleSystem = explosionInstance.GetComponent<ParticleSystem>();
         particleSystem.Play();
 		AudioSource.PlayClipAtPoint(shipExplosionSFX, explosionPosition);
+		
 	}
 
 }
